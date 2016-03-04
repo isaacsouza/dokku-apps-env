@@ -45,7 +45,7 @@ $ dokku apps:link cep myapp
 ```shell
 # dokku 0.4.x
 
-$ dokku plugin:install https://github.com/isaacsouza/dokku-apps-link.git
+$ dokku plugin:install https://github.com/isaacsouza/dokku-apps-env.git
 ```
 
 
