@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-file="requirements.env"
 
-if [[ -d "/home/isaac.souza/projects/ping" && -z "" ]]; then
-	echo "tem"
-fi
+var="my-app-teste"
+var1=${var^^}
+echo ${var1//-/_}

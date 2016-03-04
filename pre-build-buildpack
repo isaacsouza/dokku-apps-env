@@ -18,8 +18,9 @@ if [ -f "$APP_DIR/$APP_FILE" ]; then
     fi
     if [ ! -z "$key" ]; then
       if [[ -d "$DOKKU_ROOT/$key" ]]; then
+        APP_VAR=${key^^}
         dokku_log_info1 "App $key found. Generating variable with url..."
-        dokku config:set --no-restart $APP "${key^^}_URL"=$(dokku url $key)
+        dokku config:set --no-restart $APP "${APP_VAR//-/_}_URL"=$(dokku url $key)
       else
         dokku_log_warn "App $key ($value) does not exist."
       fi
