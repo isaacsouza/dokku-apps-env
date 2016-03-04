@@ -4,11 +4,21 @@ source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 source "$(dirname $0)/functions"
 
 APP=$1
-ENV_FILE="requirements.env"
-APP_FILE="requirements.app"
 GIT_DIR="$3"
 APP_DIR="$DOKKU_ROOT/$APP"
-cp "$GIT_DIR/$ENV_FILE" "$APP_DIR/$ENV_FILE"
-cp "$GIT_DIR/$APP_FILE" "$APP_DIR/$APP_FILE"
+ENV_FILE="requirements.env"
+APP_FILE="requirements.app"
+
+if [ -f "$GIT_DIR/$ENV_FILE" ]; then
+	cp "$GIT_DIR/$ENV_FILE" "$APP_DIR/$ENV_FILE"
+else
+	dokku_log_warn "$ENV_FILE not found."
+fi
+
+if [ -f "$GIT_DIR/$APP_FILE" ]; then
+	cp "$GIT_DIR/$APP_FILE" "$APP_DIR/$APP_FILE"
+else
+	dokku_log_warn "$APP_FILE not found."
+fi
 
 exit 0

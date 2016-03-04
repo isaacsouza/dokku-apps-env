@@ -9,29 +9,41 @@ ENV_FILE="requirements.env"
 APP_FILE="requirements.app"
 errors=false
 
-
-dokku_log_info1 "checking $APP_DIR/$ENV_FILE"
-
-if [ -f "$APP_DIR/$ENV_FILE" ]
-then 
-
+if [ -f "$APP_DIR/$APP_FILE" ]; then 
+  dokku_log_info1 "checking $APP_DIR/$APP_FILE"
   while IFS=':' read -r key value
   do
-	dokku config:set --no-restart $APP "${key^^}_URL"=$(dokku url $key) 
+    if [ -z "$value" ]; then
+      value="No description"
+    fi
+    if [ ! -z "$key" ]; then
+      if [[ -d "$DOKKU_ROOT/$key" ]]; then
+        dokku_log_info1 "App $key found. Generating variable with url..."
+        dokku config:set --no-restart $APP "${key^^}_URL"=$(dokku url $key)
+      else
+        dokku_log_warn "App $key ($value) does not exist."
+      fi
+    fi   
   done < <(grep "" "$APP_DIR/$APP_FILE")
+fi
 
+if [ -f "$APP_DIR/$ENV_FILE" ]; then 
+  dokku_log_info1 "checking $APP_DIR/$ENV_FILE"
   while IFS=':' read -r key value
-  do 
-  	if [ -z $(dokku config:get $APP $key) ]
-  	then
-  		dokku_log_info1 "Environment variable $key ($value) not defined."
-  		errors=true
-  	fi
+  do
+    if [ ! -z "$key" ]; then
+      if [ -z "$value" ]; then
+        value="No description"
+      fi
+    	if [ -z $(dokku config:get $APP $key) ]; then
+    		dokku_log_warn "Environment variable $key ($value) not set."
+    		errors=true
+    	fi
+    fi
   done < <(grep "" "$APP_DIR/$ENV_FILE")
   if $errors ; then
-    dokku_log_fail errors
+    dokku_log_fail "Error: There are environment variables not set"
   fi
 fi
-	
 
 exit 0

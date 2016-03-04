@@ -1,7 +1,41 @@
 # dokku-apps-link
-Plugin Dokku para linkar duas aplicações através da criação de variável.
-Na aplicação dependente <target> é criado uma variável de ambiente com nome da aplicação <source> a qual target depende.
-A variável é criada com o nome da aplicação a qual se depende, em maísculo, com sufixo _URL ao fim do nome.
+
+Plugim Dokku para facilitar validação de configuração de variáveis de ambiente e link entre aplicações.
+
+## Validação de Variáveis de Ambiente
+
+Para validar variaveis de ambientes, basta incluir na raiz do projeto o arquivo:
+
+- requirements.env 
+
+Ele deve conter o nome das variaveis de ambientes que devem estar configuradas. (uma variavel por linha).
+Exemplos para requirements.env:
+
+DATABASE_URL
+DATABASE_URL:Url da conexão com a base de dados.
+
+
+## Criando link entre aplicações com url em variável de ambiente
+
+Para injetar automaticamente o link de URL de outras apps, basta incluir na raiz do projeto o arquivo:
+
+- requirements.app 
+
+Ele deve conter o nome das apps as quais devem ser criados os links. (uma app por linha)
+Para as apps existentes a variável é criada com o nome da aplicação a qual se depende, em maísculo, com sufixo _URL ao fim do nome.
+
+Exemplos para requirements.app:
+
+cep
+cep:Aplicação de consulta de CEP.
+
+## Validação de Variáveis de Ambiente
+
+Para injetar manualmente na aplicação dependente, basta executar o comando abaixo:
+
+```
+$ dokku apps:link cep myapp
+```
 
 ## Instalação
 
@@ -11,9 +45,6 @@ A variável é criada com o nome da aplicação a qual se depende, em maísculo,
 $ dokku plugin:install https://github.com/isaacsouza/dokku-apps-link.git
 ```
 
-Para validar variaveis de ambientes, basta incluir na raiz do projeto arquivo requirements.env contendo o nome das variaveis de ambientes que devem estar configuradas. (uma variavel por linha)
-
-Para injetar automaticamente o link de URL de outras apps, basta incluir na raiz do projeto arquivo requirements.app contendo o nome das apps as quais devem ser criados os links. (uma app por linha)
 
 ## Commands
 ```
