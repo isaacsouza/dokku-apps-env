@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+source "$(dirname $0)/functions"
+
+APP=$1
+APP_DIR="$DOKKU_ROOT/$APP"
+ENV_FILE="requirements.env"
+APP_FILE="requirements.app"
+errors=false
+
+
+dokku_log_info1 "checking $APP_DIR/$ENV_FILE"
+
+if [ -f "$APP_DIR/$ENV_FILE" ]
+then 
+
+  while IFS=':' read -r key value
+  do
+	dokku config:set --no-restart $APP "${key^^}_URL"=$(dokku url $key) 
+  done < <(grep "" "$APP_DIR/$APP_FILE")
+
+  while IFS=':' read -r key value
+  do 
+  	if [ -z $(dokku config:get $APP $key) ]
+  	then
+  		dokku_log_info1 "Environment variable $key ($value) not defined."
+  		errors=true
+  	fi
+  done < <(grep "" "$APP_DIR/$ENV_FILE")
+  if $errors ; then
+    dokku_log_fail errors
+  fi
+fi
+	
+
+exit 0

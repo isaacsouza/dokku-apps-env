@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE  ]] && set -x
+
+#GIT_DIR
+
+APP_SOURCE="$2";
+APP_TARGET="$3";
+
+set_env() {
+	check_apps_args
+	dokku config:set $APP_TARGET "${APP_SOURCE^^}_URL"=$(dokku url $APP_SOURCE)
+}
+
+unset_env() {
+	check_apps_args
+	dokku config:unset $APP_TARGET "${APP_SOURCE^^}_URL"
+}
+
+check_apps_args() {
+	[[ -z APP_SOURCE ]] && dokku_log_fail "Please specify an app will be created the link"
+	[[ -z APP_TARGET ]] && dokku_log_fail "Please specify an app which depends"
+
+	verify_app_name "$APP_SOURCE"
+	verify_app_name "$APP_TARGET"
+}

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+source "$(dirname $0)/functions"
+
+APP=$1
+ENV_FILE="requirements.env"
+APP_FILE="requirements.app"
+GIT_DIR="$3"
+APP_DIR="$DOKKU_ROOT/$APP"
+cp "$GIT_DIR/$ENV_FILE" "$APP_DIR/$ENV_FILE"
+cp "$GIT_DIR/$APP_FILE" "$APP_DIR/$APP_FILE"
+
+exit 0
