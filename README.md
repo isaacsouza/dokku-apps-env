@@ -1,4 +1,4 @@
-# dokku-apps-link
+# dokku-apps-env
 
 Plugim Dokku para facilitar validação de configuração de variáveis de ambiente e link entre aplicações.
 
