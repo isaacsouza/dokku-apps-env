@@ -1,6 +1,6 @@
 # dokku-apps-env
 
-Plugim Dokku para facilitar validação de configuração de variáveis de ambiente e link entre aplicações.
+Plugin Dokku para facilitar validação de configuração de variáveis de ambiente e link entre aplicações.
 
 ## Validação de Variáveis de Ambiente
 
@@ -9,6 +9,7 @@ Para validar variaveis de ambientes, basta incluir na raiz do projeto o arquivo:
 - requirements.env 
 
 Ele deve conter o nome das variaveis de ambientes que devem estar configuradas. (uma variavel por linha).
+
 Exemplos para requirements.env:
 
 ```
