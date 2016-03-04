@@ -11,9 +11,10 @@ Para validar variaveis de ambientes, basta incluir na raiz do projeto o arquivo:
 Ele deve conter o nome das variaveis de ambientes que devem estar configuradas. (uma variavel por linha).
 Exemplos para requirements.env:
 
+```
 DATABASE_URL
 DATABASE_URL:Url da conexão com a base de dados.
-
+```
 
 ## Criando link entre aplicações com url em variável de ambiente
 
@@ -26,8 +27,10 @@ Para as apps existentes a variável é criada com o nome da aplicação a qual s
 
 Exemplos para requirements.app:
 
+```
 cep
 cep:Aplicação de consulta de CEP.
+```
 
 ## Validação de Variáveis de Ambiente
 
