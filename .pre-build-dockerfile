@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
-source "$PLUGIN_BASE_PATH/common/functions"
-source "$(dirname $0)/functions"
-
-dokku_log_info1 "Plugin apps-link ---->>>> pre-build-dockerfile"
