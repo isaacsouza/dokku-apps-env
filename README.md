@@ -11,6 +11,10 @@ A variável é criada com o nome da aplicação a qual se depende, em maísculo,
 $ dokku plugin:install https://github.com/isaacsouza/dokku-apps-link.git
 ```
 
+Para validar variaveis de ambientes, basta incluir na raiz do projeto arquivo requirements.env contendo o nome das variaveis de ambientes que devem estar configuradas. (uma variavel por linha)
+
+Para injetar automaticamente o link de URL de outras apps, basta incluir na raiz do projeto arquivo requirements.app contendo o nome das apps as quais devem ser criados os links. (uma app por linha)
+
 ## Commands
 ```
 $ dokku help
