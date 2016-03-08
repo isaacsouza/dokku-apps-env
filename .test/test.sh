@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-var="my-app-teste"
-var1=${var^^}
-echo ${var1//-/_}
+while IFS=':' read -r key value
+  do
+    echo $key
+  done < <(grep "^[[:alnum:]]" "requirements.txt")
